@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LostMap - Markerite lisamine</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    #map {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Loome kaardi ja määrame selle keskpunkti (Eesti)
+    var map = L.map('map').setView([58.5953, 25.0136], 7); // Keskendume Eesti kaardile
+
+    // Laadime OpenStreetMapi kaardi kihi
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Kaardil klõpsates lisatakse uus marker
+    map.on('click', function(e) {
+      // Küsi kasutajalt koha nimi
+      var title = prompt("Sisesta koha nimi või kirjeldus:");
+      if (title) {
+        // Lisame markeri kaardile
+        var newMarker = L.marker(e.latlng).addTo(map)
+          .bindPopup(title)
+          .openPopup();
+      }
+    });
+  </script>
+</body>
+</html>
